@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 组件通信：媒体：Event
+        传入  Event.$emit('传入事件','参数')
+        接受  mounted : function() { 
+                              var me = this;
+                              Event.$on('nolike_said_thing',function(data){
+                                                 me.nosaid = data;
+                              })
+                        }
+        原理： 传输组件向媒体Event通过Event.$emit('事件名','参数')传入一个事件,并且带有参数
+              接受组件有一个天生的生命周期，可以接受媒体的事件及参数   mounted是个函数
+              通过里面的Event.on('接受事件','function(参数){通过传入的参数改变自己的值}')
+    -->
+    <div id="app">
+        <like></like>
+        <nolike></nolike>
+    </div>
+    <script src="vue.min.js" ></script>
+    <script>
+        var Event = new Vue();
+        Vue.component('like',{
+            template : `
+                <div>
+                    传输 : <input @keyup="on_change" v-model="said" type="text" >
+                    {{said}}
+                </div>
+            `,
+            methods : {
+                on_change : function() {
+                    Event.$emit('nolike_said_thing',this.said)
+                }
+            },
+            data : function() {
+                return {
+                    said: ''
+                }
+            }
+        })
+        Vue.component('nolike',{
+            template: `
+                <div>
+                    接听 :<input v-model="nosaid" type="text">
+                    {{nosaid}}
+                </div>
+            `,
+            data : function() {
+                return {
+                    nosaid : ''
+                }
+            },
+            mounted : function() {
+                var me = this;
+                Event.$on('nolike_said_thing',function(data){
+                    me.nosaid = data;
+                })
+            }
+        })
+        new Vue({
+            el : '#app'
+        })
+
+    </script>
+</body>
+</html>

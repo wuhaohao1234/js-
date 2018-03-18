@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        过滤器：本质是将prop以什么样子的方式显示
+        {{prop | sex}}后面的sex是选择方式
+        Vue.filter(选择方式,函数)
+     -->
+    <div id="app">
+        <input type="text" v-model="prop" >
+        {{prop | sex}}
+    </div>
+    <script src="vue.min.js" ></script>
+    <script>
+        Vue.filter('sex',function(val){
+            val = val || 0;
+            return val + '元'
+        })
+        new Vue({
+            el : '#app',
+            data : {
+                prop : 10
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>子组件传递父组件</title>
+</head>
+<!-- 
+    子组件传递: $emit   
+    this.$emit('show_alert',{ a : 1, b : 2 })
+     this.$emit('事件',{参数})
+ -->
+<body>
+    <div id="app">
+        <alert></alert>
+    </div>
+    <script src="vue.min.js" ></script>
+    <script>
+        Vue.component('alert',{
+            template : `
+                <div>
+                    <show @show_alert="show_alert = true" ></show>
+                    <div v-if="show_alert" >显示余额</div>
+                </div>
+            `,
+            data : function() {
+                return {
+                    show_alert : false
+                }
+            }
+        })
+        Vue.component('show',{
+            template : `
+                <button @click="on_click" >显示余额</button>
+            `,
+            methods : {
+                on_click : function() {
+                    this.$emit('show_alert',{
+                        a : 1,
+                        b : 2
+                    })
+                }
+            }
+        })
+        new Vue({
+            el : '#app'
+        })
+    </script>
+</body>
+</html>

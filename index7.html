@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .card{
+            width:100px;
+            background:#ccc;
+        }
+    </style>
+</head>
+<!-- 自定义指令：
+    directive(指令，function(el,exe))
+-->
+<body>
+    <div id="app"> 
+        <div v-pin="true" class="card">
+
+            sajlfkdj sadlkfj sadl kfjsla dkfjsladk fjsdlka fjsldkfjlsdk
+        </div>
+        <div v-pin="false" class="card">sajlfkd jsadl kfjsad lkfjsl adkfj sladkfjsdl kafjsldkfjlsdk</div>
+    </div>
+    <script src="vue.min.js" ></script>
+    <script>
+        Vue.directive('pin',function(el,exe){
+            var bin = exe.value;
+            // console.log(bin)
+            if(bin) {
+                el.style.position = 'fixed';
+                el.style.top = '10px';
+                el.style.left = '10px';
+            }
+        })
+        new Vue({
+            el : '#app'
+        })
+    </script>
+</body>
+</html>
